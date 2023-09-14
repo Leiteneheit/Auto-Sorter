@@ -1,6 +1,7 @@
 import os
 import shutil
 import eyed3
+import re
 
 
 def movement():
@@ -97,13 +98,16 @@ def replaceTest():
 
 def readLast(file, n):
     """READ THE LAST N LINES OF A GIVEN FILE"""
+    lines = list()
     with open(file, "r") as target:
-        print(f"Last {n} tasks from the file: {file}.")
+        print(f"Last {n} tasks from the file: {file}.\n")
         for line in target.readlines()[-(n+(n-1)):]:
             if line != "\n":
                 print(line, end='')
+                lines.append(line)
             else:
                 continue
+    return lines
 
 
 def test():
