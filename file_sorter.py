@@ -90,6 +90,11 @@ def moveLogger():
                     log.write(f"MV{round(len(item)/len(holder))}-2> The file |{item}| will be moved to ~{holder}~.\n")
 
 
+
+# Functions to aid undoing actions.
+
+
+
 def readLast(file, n):
     """READ THE LAST N LINES OF A GIVEN FILE"""
     lines = list()
@@ -135,8 +140,21 @@ def undo(no):
     undoMove(maintain)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 def main():
-    undo(1)
+    pass
 
 
 while __name__ == '__main__':
