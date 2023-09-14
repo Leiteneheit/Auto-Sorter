@@ -121,13 +121,18 @@ def regSplit(array):
     return holder
 
 
+def addressBuilder(Dict):
+    addresses = list()
+    for key in Dict.keys():
+        target = f"{Dict[key]}/{key}"
+        addresses.append(target)
+    return addresses
+
+
 def test():
-    pattern = r"(\|.*\|)(?:.*)(\~.*\~)"
-    holder = {}
-    result = re.search(pattern,
-                       "The file |All Quiet on the Western Front (2022) [720p] [WEBRip] [YTS.MX].torrent| will be moved to ~/Users/mac/Downloads/Torrentz~.")
-    holder[result[1][1:(len(result[1]) - 1)]] = result[2][1:(len(result[2]) - 1)]
-    print(holder)
+    main = addressBuilder(regSplit(readLast("/Users/mac/Downloads/sorting_log.txt", 10)))
+    for x in main:
+        print(x)
 
 
-print(regSplit(readLast("/Users/mac/Downloads/sorting_log.txt", 10)))
+test()
