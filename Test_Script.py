@@ -142,4 +142,4 @@ def test():
     undoMove(main)
 
 
-test()
+readLast("/Users/mac/Downloads/sorting_log.txt", 46)
