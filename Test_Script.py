@@ -97,9 +97,9 @@ def replaceTest():
 
 def readLast(file, n):
     """READ THE LAST N LINES OF A GIVEN FILE"""
-    with open(file) as target:
+    with open(file, "r") as target:
         print(f"Last {n} lines from the file: {file}.")
-        for line in file.readlines()[-n:]:
+        for line in target.readlines()[-n:]:
             print(line, end='')
 
 
@@ -132,4 +132,4 @@ def test():
             print(f"The file [{item}] will be moved to [{holder}].\n")
 
 
-test()
+readLast("/Users/mac/Downloads/sorting_log.txt", 5)
