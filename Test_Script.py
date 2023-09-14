@@ -11,9 +11,9 @@ def movement():
 
     categories = {"Documents": ["docx", "txt", "pdf"],
                   "Movies": ["mkv", "mp4", "mpeg"],
-                  "Torrents": "torrent",
+                  "Torrents": ["torrent"],
                   "Pictures": ["jpeg", "jpg", "png", "webp", "gif"],
-                  "Music": "mp3"}
+                  "Music": ["mp3"]}
 
     for item in items:
         # noinspection PyRedeclaration
@@ -100,7 +100,6 @@ def readLast(file, n):
     """READ THE LAST N LINES OF A GIVEN FILE"""
     lines = list()
     with open(file, "r") as target:
-        print(f"Last {n} tasks from the file: {file}.\n")
         for line in target.readlines()[-(n+(n-1)):]:
             if line != "\n":
                 lines.append(line)
@@ -123,16 +122,24 @@ def regSplit(array):
 
 def addressBuilder(Dict):
     addresses = list()
+    names = list()
     for key in Dict.keys():
         target = f"{Dict[key]}/{key}"
         addresses.append(target)
-    return addresses
+        names.append(key)
+    return [addresses, names]
+
+
+def undoMove(array, target="/Users/mac/Downloads"):
+    for address in array[0]:
+        nameIndex = array[0].index(address)
+        # shutil.move(address, f"{target}/{array[1][nameIndex]}")
+        print(f"> The movement of file {array[1][nameIndex]} to {address[:-(len(array[1][nameIndex])+1)]} has been undone.")
 
 
 def test():
     main = addressBuilder(regSplit(readLast("/Users/mac/Downloads/sorting_log.txt", 10)))
-    for x in main:
-        print(x)
+    undoMove(main)
 
 
 test()
