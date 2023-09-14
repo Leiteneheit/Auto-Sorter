@@ -103,40 +103,31 @@ def readLast(file, n):
         print(f"Last {n} tasks from the file: {file}.\n")
         for line in target.readlines()[-(n+(n-1)):]:
             if line != "\n":
-                print(line, end='')
                 lines.append(line)
             else:
                 continue
     return lines
 
 
-def test():
-    path = "/Users/mac/Downloads"
-    os.chdir(path)
-    items = os.listdir(path)
-
-    categories = {"/Users/mac/Movies/Container": ["mkv", "mp4", "mpeg"],
-                  "/Users/mac/Downloads/Torrentz": ["torrent"],
-                  "/Users/mac/Downloads/Pictures": ["jpeg", "jpg", "png", "webp", "gif"]}
-
-    for item in items:
-        # noinspection PyRedeclaration
-        name, ext = os.path.splitext(item)
-        ext = ext[1:]
-        holder = ""
-
-        if ext == '':
+def regSplit(array):
+    pattern = r"(\|.*\|).*(\~.*\~)"
+    holder = {}
+    for line in array:
+        result = re.search(pattern, line)
+        if result:
+            holder[result[1][1:(len(result[1])-1)]] = result[2][1:(len(result[2])-1)]
+        else:
             continue
-
-        for x in categories.keys():
-            if ext in categories[x]:
-                holder = x
-
-        if os.path.exists(holder) and holder != "":
-            print(f"The file [{item}] will be moved to [{holder}].\n")
-        elif not os.path.exists(holder) and holder != "":
-            print(f"The folder [{holder}] has been newly created.\n")
-            print(f"The file [{item}] will be moved to [{holder}].\n")
+    return holder
 
 
-readLast("/Users/mac/Downloads/sorting_log.txt", 10)
+def test():
+    pattern = r"(\|.*\|)(?:.*)(\~.*\~)"
+    holder = {}
+    result = re.search(pattern,
+                       "The file |All Quiet on the Western Front (2022) [720p] [WEBRip] [YTS.MX].torrent| will be moved to ~/Users/mac/Downloads/Torrentz~.")
+    holder[result[1][1:(len(result[1]) - 1)]] = result[2][1:(len(result[2]) - 1)]
+    print(holder)
+
+
+print(regSplit(readLast("/Users/mac/Downloads/sorting_log.txt", 10)))
